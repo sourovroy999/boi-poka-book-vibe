@@ -9,6 +9,7 @@ import Book from '../Book/Book';
 const ListedBooks = () => {
     const allBooks=useLoaderData();
     const[readList, setReadList]=useState([])
+    const[sort,setSort]=useState('')
 
 
 
@@ -28,9 +29,39 @@ const ListedBooks = () => {
         
         
     },[])
+
+
+    const handleSort=sortType=>{
+            setSort(sortType);
+            if(sortType=== 'No of Pages'){
+                const sortedReadList=[...readList].sort((a,b)=>a.totalPages-b.totalPages)
+                setReadList(sortedReadList)
+            }
+
+            if(sortType==='Published Year'){
+                const sortedReadList=[...readList].sort((a,b)=>a.yearOfPublishing-b.yearOfPublishing)
+                setReadList(sortedReadList)
+            }
+    }
+
     return (
         <div className='mb-64'>
             <h3 className='text-3xl my-8'>Listed Books</h3>
+
+        {/* change popover-1 and --anchor-1 names. Use unique names for each dropdown */}
+{/* For TSX uncomment the commented types below */}
+<button className="btn mb-5" popoverTarget="popover-1" style={{ anchorName: "--anchor-1" } /* as React.CSSProperties */}>
+  {
+    sort? `Sort By:${sort}`: "Sort By"
+  }
+</button>
+
+<ul className="dropdown menu w-52 rounded-box bg-base-100 shadow-sm"
+  popover="auto" id="popover-1" style={{ positionAnchor: "--anchor-1" } /* as React.CSSProperties */ }>
+  <li onClick={()=>handleSort('No of Pages')}><a>No of pages</a></li>
+  <li onClick={()=>handleSort('Published Year')}><a>Published Year</a></li>
+</ul>
+
             <Tabs>
     <TabList>
       <Tab>Read List</Tab>
