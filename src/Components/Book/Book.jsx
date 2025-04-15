@@ -1,4 +1,4 @@
-import Button from 'daisyui/components/button';
+
 import React from 'react';
 import { Link } from 'react-router';
 
